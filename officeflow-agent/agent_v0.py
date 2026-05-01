@@ -217,7 +217,20 @@ QUERY_DATABASE_TOOL = {
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "SQL query to execute against the inventory database"
+                    "description": """SQL query to execute against the inventory database.
+
+                                YOU DO NOT KNOW THE SCHEMA. ALWAYS discover it first:
+                                1. Query 'SELECT name FROM sqlite_master WHERE type="table"' to see available tables
+                                2. Use 'PRAGMA table_info(table_name)' to inspect columns for each table
+                                3. Only after understanding the schema, construct your search queries
+
+                                SEARCH BEST PRACTICES (apply after schema discovery):
+                                - Product names/labels are usually descriptive and may contain the search term anywhere in the text
+                                - When searching text fields, use wildcards on BOTH sides: LIKE '%keyword%'
+                                - For case-insensitive search, wrap in LOWER(): LOWER(column) LIKE LOWER('%keyword%')
+                                - Do not assume text fields start with any particular pattern"""
+            
+            
                 }
             },
             "required": ["query"]
